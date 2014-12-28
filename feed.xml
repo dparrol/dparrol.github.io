@@ -4,8 +4,8 @@
  <title>Danrich Parrol's Blog</title>
  <description>Thoughts, mostly about technology</description>
  <link>https://dparrol.github.io/</link>
- <lastBuildDate>Sat, 27 Dec 2014 17:23:48 </lastBuildDate>
- <pubDate>Sat, 27 Dec 2014 17:23:48 </pubDate>
+ <lastBuildDate>Sat, 27 Dec 2014 20:54:26 </lastBuildDate>
+ <pubDate>Sat, 27 Dec 2014 20:54:26 </pubDate>
  <language>en-US</language>
  
  <item>
@@ -38,7 +38,10 @@ Billy Danger
  
  <item>
   <title>First post</title>
-  <description><![CDATA[<p>This post was created to test the software I wrote to generate this blog. It is a placeholder, and should be ignored by all right-thinking people.</p>]]></description>
+  <description><![CDATA[<p>This post was created to test the software I wrote to generate this blog. It is a placeholder, and should be ignored by all right-thinking people.</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="s">&#39;foo&#39;</span>
+</pre></div>]]></description>
   <link>https://dparrol.github.io/first-post.html</link>
   <guid isPermaLink="true">https://dparrol.github.io/first-post.html</guid>
   <pubDate>Sat, 20 Dec 2014 00:00:00 </pubDate>
