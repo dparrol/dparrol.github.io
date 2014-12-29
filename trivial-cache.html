@@ -23,7 +23,7 @@
 
 <p>Making a cache just requires allocating some memory to hold it, and making sure it's initially blank:</p>
 <div class="codehilite"><pre><span class="cp">#define CACHE_SIZE 128</span>
-<span class="kt">cache_t</span> <span class="o">*</span><span class="nf">cacheCreate</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">cache_t</span> <span class="nf">cacheCreate</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">calloc</span><span class="p">(</span><span class="n">CACHE_SIZE</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">payload_t</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
