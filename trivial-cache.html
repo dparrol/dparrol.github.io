@@ -15,11 +15,11 @@
 <div class="codehilite"><pre><span class="c1">// Keys and values in the cache are both strings. You could use</span>
 <span class="c1">// whatever you want, but let&#39;s keep it simple for now.</span>
 <span class="k">typedef</span> <span class="kt">char</span><span class="o">*</span> <span class="kt">key_t</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="kt">char</span><span class="o">*</span> <span class="kt">payload_t</span><span class="p">;</span>
-<span class="c1">// A cache is just an array of slots where we can put payloads.</span>
+<span class="k">typedef</span> <span class="kt">char</span><span class="o">*</span> <span class="kt">value_t</span><span class="p">;</span>
+<span class="c1">// A cache is just an array of slots where we can put values.</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
     <span class="kt">key_t</span> <span class="n">key</span><span class="p">;</span> 
-    <span class="kt">payload_t</span> <span class="n">value</span><span class="p">;</span>
+    <span class="kt">value_t</span> <span class="n">value</span><span class="p">;</span>
 <span class="p">}</span> <span class="kt">cache_entry_t</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="kt">cache_entry_t</span><span class="o">*</span> <span class="kt">cache_t</span><span class="p">;</span>
 </pre></div>
@@ -34,18 +34,18 @@
 
 
 <p>To insert a key-value pair into the cache, hash your key and put it in there.</p>
-<div class="codehilite"><pre><span class="kt">void</span> <span class="nf">cacheInsert</span><span class="p">(</span><span class="kt">cache_t</span> <span class="n">cache</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">key</span><span class="p">,</span> <span class="kt">payload_t</span> <span class="n">payload</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span class="kt">void</span> <span class="nf">cacheInsert</span><span class="p">(</span><span class="kt">cache_t</span> <span class="n">cache</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">key</span><span class="p">,</span> <span class="kt">value_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">%</span> <span class="n">CACHE_SIZE</span><span class="p">;</span> <span class="c1">// Get position in cache</span>
     <span class="n">free</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">);</span>             <span class="c1">// Evict anything already there</span>
     <span class="n">free</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">value</span><span class="p">);</span>
-    <span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>             <span class="c1">// Put new payload in place</span>
-    <span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">payload</span><span class="p">;</span>
+    <span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>             <span class="c1">// Put new value in place</span>
+    <span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 
 
 <p>To look up something, it's just like a hash table lookup except without any collision handling:</p>
-<div class="codehilite"><pre><span class="kt">payload_t</span> <span class="nf">cacheGet</span><span class="p">(</span><span class="kt">cache_t</span> <span class="n">cache</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span class="kt">value_t</span> <span class="nf">cacheGet</span><span class="p">(</span><span class="kt">cache_t</span> <span class="n">cache</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">%</span> <span class="n">CACHE_SIZE</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="o">&amp;&amp;</span> <span class="n">keys_equal</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>  <span class="c1">// We found the key! :-D</span>
